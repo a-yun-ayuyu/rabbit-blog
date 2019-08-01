@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+  <head>
+    <title>らびらびブログ</title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <script type="text/javascript">
+      WebFontConfig = {
+        google: { families: [ 'Unica+One::latin' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+      </script>
+     <style type="text/css" href="./style.css"></style>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+
+  <body>
+    <header class="header">
+    <div class="header__bar row">
+        <h1 class="brand-logo center"><a href="/">らびらびブログ</a></h1>
+           <% if user_signed_in? %>
+       <div class="user_nav left hide-on-med-and-down">
+          <span><%= current_user.nickname %>
+            <ul class="user__info">
+              <li>
+               <a href="/users/<%= current_user.id %>">マイページ</a>
+               <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+               </li>
+            </ul>
+          </span>
+          <a class="post" href="/posts/new">投稿する</a>
+      </div>
+          <% else %>
+        <div class="left hide-on-med-and-down">
+          <%= link_to "ログイン", new_user_session_path, class: 'post' %>
+          <%= link_to "新規登録", new_user_registration_path, class: 'post' %>
+        </div>
+         <% end %>
+    </div>
+    </header>
+
+    <%= yield %>
+
+    <footer>
+      <p>
+        Copyright らびらびブログ　2019.
+      </p>
+    </footer>
+  </body>
+</html>
